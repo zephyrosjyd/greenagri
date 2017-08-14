@@ -16,6 +16,12 @@
   	<description></description>
   	<servlet-class>crawling.ProductCrawler</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>Index</servlet-name>
+  	<display-name>Index</display-name>
+  	<description></description>
+  	<servlet-class>index.Index</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>BoardCrawler</servlet-name>
   	<url-pattern>/crawling/board</url-pattern>
@@ -23,6 +29,10 @@
   <servlet-mapping>
   	<servlet-name>ProductCrawler</servlet-name>
   	<url-pattern>/crawling/product</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>Index</servlet-name>
+  	<url-pattern>/create</url-pattern>
   </servlet-mapping>
   <welcome-file-list>
   	<welcome-file>index.jsp</welcome-file>

@@ -24,13 +24,28 @@
 	</h2>
 	
 	<p>
-	<h3>자동 크롤링</h3>
+	<a href="create">Create DATABASE</a>
+	
+	<p>
 	<form action="crawling/board">
-		게시 URL: <input type="text" name="url"> 
-		<input type="submit" value="게시글 크롤링"><br>
-	</form><br>
-	<button type="submit" formaction="crawling/product" formtarget="_self">상품정보 크롤링</button>
-	<button type="submit" formaction="" formtarget="_self">집계</button>
+	<table>
+		<tr>
+			<th><h3>자동 크롤링</h3></th>
+		</tr>
+		<tr>
+			<td>
+				게시 URL: <input type="text" name="url"> 
+				<input type="submit" value="게시글 크롤링"><br>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<button type="submit" formaction="crawling/product" formtarget="_self">상품정보 크롤링</button>
+			</td>
+		</tr>
+	</table>
+	</form>
+	<!-- <button type="submit" formaction="" formtarget="_self">집계</button> -->
 	<br><br>
 	<p>
 	<table>
@@ -60,7 +75,7 @@
 			</td>
 		</tr>
 	</table>
-	<button type="submit" formaction="" formtarget="_self">집계</button>
+	<!-- <button type="submit" formaction="" formtarget="_self">집계</button> -->
 	<br><br><br><br>
 	<p>
 	<table>

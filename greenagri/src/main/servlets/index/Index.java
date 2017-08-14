@@ -1,4 +1,4 @@
-package crawling;
+package index;
 
 import java.io.IOException;
 import javax.servlet.ServletConfig;
@@ -8,38 +8,39 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class BoardCrawler
+ * Servlet implementation class Index
  */
-public class BoardCrawler extends HttpServlet {
+public class Index extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	ServletConfig config;
 
 	/**
 	 * @see Servlet#init(ServletConfig)
 	 */
 	public void init(ServletConfig config) throws ServletException {
-		this.config = config;
+		System.out.println("Index.init() called");
 	}
 
 	/**
 	 * @see Servlet#getServletConfig()
 	 */
 	public ServletConfig getServletConfig() {
-		return this.config;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**
 	 * @see Servlet#getServletInfo()
 	 */
 	public String getServletInfo() {
-		return "version=1.0;author=zephyros"; 
+		// TODO Auto-generated method stub
+		return null; 
 	}
 
 	/**
 	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("BoardCrawler.service() called");
+		System.out.println("Index.service() called");
 	}
 
 	/**
@@ -48,14 +49,6 @@ public class BoardCrawler extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 }
