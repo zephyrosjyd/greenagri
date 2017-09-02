@@ -1,4 +1,4 @@
-package crawling;
+package crawling.manual;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -16,46 +15,34 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
 /**
- * Servlet implementation class ProductCrawler
+ * Servlet implementation class PostRegister
  */
-public class ProductCrawler extends HttpServlet {
+public class PostRegister extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ServletConfig config;
-    
+	ServletConfig config;
+
 	/**
 	 * @see Servlet#init(ServletConfig)
 	 */
 	public void init(ServletConfig config) throws ServletException {
 		this.config = config;
 	}
-	
+
+	/**
+	 * @see Servlet#destroy()
+	 */
+	public void destroy() {
+		// TODO Auto-generated method stub
+	}
+
 	/**
 	 * @see Servlet#getServletConfig()
 	 */
 	public ServletConfig getServletConfig() {
+		// TODO Auto-generated method stub
 		return this.config;
 	}
-
-	/**
-	 * @see Servlet#getServletInfo()
-	 */
-	public String getServletInfo() {
-		return "version=1.0;author=zephyros"; 
-	}
-
-	/**
-	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
-	 */
-//	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		System.out.println("ProductCrawler.service() called");
-//		this.doGet(request, response);
-//	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -71,8 +58,11 @@ public class ProductCrawler extends HttpServlet {
 		}
 		
 		request.setCharacterEncoding("UTF-8");
-		String url = "http://www.farmmate.com/shop/n_home_best100.php";
-		Document rawPage = Jsoup.connect(url).get();
+		String chno = request.getParameter("chno");
+		String url = request.getParameter("url");
+		String postno = request.getParameter("postno");
+		String regdate = request.getParameter("regdate");
+		String contents = request.getParameter("contents");
 		
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -80,36 +70,18 @@ public class ProductCrawler extends HttpServlet {
 			stmt = conn.createStatement();
 			
 			String sql = null;
+			sql = "insert into t_board (chno, url, postno, wdate, contents) ";
+			sql += "values (?, ?, ?, ?, ?)";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, Integer.valueOf(chno));
+			pstmt.setString(2, url);
+			pstmt.setString(3, postno);
+			pstmt.setDate(4, Date.valueOf(regdate));
+			pstmt.setString(5, contents);
+			int result = pstmt.executeUpdate();
+			System.out.println("<SQL> " + sql + " ==> " + result);
+			pstmt.close();
 			
-			//String text = rawPage.text();
-			Elements rows = rawPage.select("table table table").nextAll().select("tr");
-//			System.out.println(info);
-			
-			String title = null, price = null, base = null, prodno = null;
-			for(Element row : rows) {
-				//System.out.println(row.text());
-				
-				List<String> textList = row.children().eachText();
-				if (textList.size() != 6) continue;
-				
-				prodno = textList.get(2);
-				title = textList.get(3);
-				base = title;
-				price = textList.get(4).substring(0, textList.get(4).length()-1);
-				price = price.substring(0, price.lastIndexOf(',')).concat( price.substring(price.lastIndexOf(',')+1) );
-				//System.out.println(textList.get(4) + ": " + Integer.valueOf(price));
-			
-				sql = "insert into t_product (chno, url, title, price, base) ";
-				sql += "values (1, ?, ?, ?, ?)";
-				PreparedStatement pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, url);
-				pstmt.setString(2, title);
-				pstmt.setInt(3, Integer.valueOf(price));
-				pstmt.setString(4, base);
-				int result = pstmt.executeUpdate();
-				System.out.println("<SQL> " + sql + " ==> " + result);
-				pstmt.close();
-			}
 			
 			sql = "select b.chno, b.cnt, p.cnt from " +
 					"(select chno, count(*) as cnt from t_board group by chno) b " +
@@ -120,13 +92,11 @@ public class ProductCrawler extends HttpServlet {
 			System.out.println("<SQL> " + sql);
 			
 			request.setAttribute("rs", rs);
-			
+				
+			// TODO Auto-generated method stub
 			//response.getWriter().append("Served at: ").append(request.getContextPath());
-//			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
-//			dispatcher.forward(request, response);
 			callJspPage(request, response, "/index.jsp");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new ServletException(e);
 		} finally {

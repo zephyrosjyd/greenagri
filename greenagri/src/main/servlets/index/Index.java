@@ -1,6 +1,8 @@
 package index;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -37,18 +39,20 @@ public class Index extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Index.service() called");
-	}
-
-	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		callJspPage(request, response, "/index.jsp");
 	}
 
+	private void callJspPage(HttpServletRequest request, HttpServletResponse response, String url) throws ServletException, IOException {
+		//request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+	
+		RequestDispatcher rd = request.getRequestDispatcher(url);
+		rd.include(request, response);
+	}
 }
