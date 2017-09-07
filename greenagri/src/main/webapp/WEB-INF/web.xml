@@ -67,6 +67,12 @@
   	<description></description>
   	<servlet-class>analysis.VectorSpaceAnalysis</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>BuyPathAnalysis</servlet-name>
+  	<display-name>BuyPathAnalysis</display-name>
+  	<description></description>
+  	<servlet-class>analysis.BuyPathAnalysis</servlet-class>
+  </servlet>
   
   <servlet-mapping>
   	<servlet-name>BoardCrawler</servlet-name>
@@ -95,6 +101,10 @@
   <servlet-mapping>
   	<servlet-name>VectorSpaceAnalysis</servlet-name>
   	<url-pattern>/analysis/vector</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>BuyPathAnalysis</servlet-name>
+  	<url-pattern>/analysis/buypath</url-pattern>
   </servlet-mapping>
   
   <welcome-file-list>

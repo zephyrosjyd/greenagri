@@ -24,7 +24,7 @@
 		<b>|빅데이터구축|</b> 
 		<a href="/greenagri/analysis/sentiment">감성분석</a> 
 		<a href="/greenagri/analysis/vector">게시글검색(비평글관리)</a> 
-		<a href="#">구매경로분석</a> 
+		<a href="/greenagri/analysis/buypath">구매경로분석</a> 
 		<a href="#">선호제품분석</a>
 	</h2>
 	

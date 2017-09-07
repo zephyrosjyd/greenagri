@@ -4,7 +4,6 @@
     
 <%
     ResultSet rs = (ResultSet)request.getAttribute("rs"); 
-	String result = (String)request.getAttribute("result");
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -22,27 +21,26 @@
 </head>
 <body>
 	<h2>
-		<a href="/greenagri/">빅데이터구축</a> 
-		<b>|감성분석|</b> 
+		<a href="/greenagri/">빅데이터구축</a>  
+		<a href="/greenagri/analysis/sentiment">감성분석</a> 
 		<a href="/greenagri/analysis/vector">게시글검색(비평글관리)</a> 
-		<a href="/greenagri/analysis/buypath">구매경로분석</a> 
+		<b>|구매경로분석|</b> 
 		<a href="#">선호제품분석</a>
 	</h2>
 	
 	<p>
-	<a href="?calc=true">감성점수 계산</a> | <a href="?calc=false">감성분석</a>
-
-    <p>
-    <% if (result == "ok") { %>
-    계산 완료!
-    <% } %>
-	<br><br><br><br>
+	| <a href="?kind=freq">제품별 빈도수 계산</a> || <a href="?kind=path">구매경로분석</a> |
+	
+	<% if (request.getAttribute("ok") != null) { %>
+	<p>success
+	<% } %>
+	
 	<p>
 	<% if (rs != null) { %>
 	<table>
-		<tr><th>채널번호</th><th>게시글번호</th><th>감성점수</th><th>게시글</th></tr>
+		<tr><th>채널번호</th><th>제품빈도총계</th><th>가중치</th><th>구매경로비율</th></tr>
 		<% while (rs.next()) { %>
-		<tr><td><%= rs.getInt(1) %></td><td><%= rs.getString(2) %></td><td><%= rs.getDouble(4) %></td><td><%= rs.getString(3) %></td></tr>
+		<tr><td><%= rs.getInt(1) %></td><td><%= rs.getInt(2) %></td><td><%= rs.getDouble(3) %></td><td><%= rs.getDouble(4) %></td></tr>
 		<% } %>
 	</table>
 	<% } %>
