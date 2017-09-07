@@ -22,8 +22,8 @@
 <body>
 	<h2>
 		<b>|빅데이터구축|</b> 
-		<a href="#">감성분석</a> 
-		<a href="#">게시글관리</a> 
+		<a href="/greenagri/analysis/sentiment">감성분석</a> 
+		<a href="/greenagri/analysis/vector">게시글검색(비평글관리)</a> 
 		<a href="#">구매경로분석</a> 
 		<a href="#">선호제품분석</a>
 	</h2>
@@ -60,7 +60,7 @@
 		</tr>
 		<tr>
 			<td>
-				<form action="/greenagri/manreg/board">
+				<form action="/greenagri/manreg/board" method="post">
 				채널번호: <input type="text" name="chno"><br>
 				URL: <input type="text" name="url"><br>
 				게시글번호: <input type="text" name="postno"><br>
@@ -70,7 +70,7 @@
 				</form><br>
 			</td>
 			<td>
-				<form action="/greenagri/manreg/product">
+				<form action="/greenagri/manreg/product" method="post">
 				채널번호: <input type="text" name="chno"><br>
 				URL: <input type="text" name="url"><br>
 				상품명: <input type="text" name="title"><br>

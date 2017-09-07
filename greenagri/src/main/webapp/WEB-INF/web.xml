@@ -55,6 +55,18 @@
   	<description></description>
   	<servlet-class>crawling.manual.ProductRegister</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>SentimentAnalysis</servlet-name>
+  	<display-name>SentimentAnalysis</display-name>
+  	<description></description>
+  	<servlet-class>analysis.SentimentAnalysis</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>VectorSpaceAnalysis</servlet-name>
+  	<display-name>VectorSpaceAnalysis</display-name>
+  	<description></description>
+  	<servlet-class>analysis.VectorSpaceAnalysis</servlet-class>
+  </servlet>
   
   <servlet-mapping>
   	<servlet-name>BoardCrawler</servlet-name>
@@ -75,6 +87,14 @@
   <servlet-mapping>
   	<servlet-name>ProductRegister</servlet-name>
   	<url-pattern>/manreg/product</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>SentimentAnalysis</servlet-name>
+  	<url-pattern>/analysis/sentiment</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>VectorSpaceAnalysis</servlet-name>
+  	<url-pattern>/analysis/vector</url-pattern>
   </servlet-mapping>
   
   <welcome-file-list>
