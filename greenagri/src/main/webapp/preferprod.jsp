@@ -4,6 +4,10 @@
     
 <%
     ResultSet rs = (ResultSet)request.getAttribute("rs"); 
+	String searchprod = (String)request.getAttribute("searchprod");
+	String prodname = (String)request.getAttribute("prodname");
+	String pid = (String)request.getAttribute("pid");
+	String updated = (String)request.getAttribute("updated");
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -29,6 +33,28 @@
 	</h2>
 	
 	<p>
+	<h3>표준가격입력</h3><br>
+	<form action="/greenagri/manreg/search">
+	검색어: <input type="text" name="searchprod" value="<%= searchprod %>"> 
+	<input type="submit" value="검색"><br>
+	</form>
+	<form action="/greenagri/manreg/price">
+	상품명: <input type="text" name="prodname" value="<%= prodname %>">
+	<input type="hidden" name="pid" value="<%= pid %>"><br>
+	표준가격: <input type="text" name="price"><br>
+	<input type="submit" value="입력">
+	</form>
+	<br>
+	<% if (updated != null) { %>
+	updated: <%= updated %>
+	<% } %>
+	
+	<br><br>
+	<p>
+	<form action="/greenagri/analysis/preferprod">
+	<input type="hidden" name="exec" value="ok">
+	<button type="submit">선호제품분석</button>
+	</form>
 	
 	<p>
 	<% if (rs != null) { %>

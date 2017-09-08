@@ -69,7 +69,7 @@
 		<a href="/greenagri/analysis/sentiment">감성분석</a> 
 		<b>|게시글검색(비평글관리)|</b> 
 		<a href="/greenagri/analysis/buypath">구매경로분석</a> 
-		<a href="#">선호제품분석</a>
+		<a href="/greenagri/analysis/preferprod">선호제품분석</a>
 	</h2>
 	
 	<p>
@@ -89,8 +89,8 @@
 		<tr>
 		<td><%= rs.getInt(1) %></td>
 		<td><%= rs.getString(2) %></td>
-		<td><%= rs.getDouble(4) %></td>
-		<td><%= rs.getDouble(5) %></td>
+		<td><%= String.format("%.4f", rs.getDouble(4)) %></td>
+		<td><%= String.format("%.4f", rs.getDouble(5)) %></td>
 		<td><%= rs.getString(3) %></td>
 		</tr>
 		<% } %>

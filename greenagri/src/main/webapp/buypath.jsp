@@ -25,7 +25,7 @@
 		<a href="/greenagri/analysis/sentiment">감성분석</a> 
 		<a href="/greenagri/analysis/vector">게시글검색(비평글관리)</a> 
 		<b>|구매경로분석|</b> 
-		<a href="#">선호제품분석</a>
+		<a href="/greenagri/analysis/preferprod">선호제품분석</a>
 	</h2>
 	
 	<p>
@@ -40,7 +40,11 @@
 	<table>
 		<tr><th>채널번호</th><th>제품빈도총계</th><th>가중치</th><th>구매경로비율</th></tr>
 		<% while (rs.next()) { %>
-		<tr><td><%= rs.getInt(1) %></td><td><%= rs.getInt(2) %></td><td><%= rs.getDouble(3) %></td><td><%= rs.getDouble(4) %></td></tr>
+		<tr>
+		<td><%= rs.getInt(1) %></td><td><%= rs.getInt(2) %></td>
+		<td><%= String.format("%.4f", rs.getDouble(3)) %></td>
+		<td><%= String.format("%.4f", rs.getDouble(4)) %></td>
+		</tr>
 		<% } %>
 	</table>
 	<% } %>
