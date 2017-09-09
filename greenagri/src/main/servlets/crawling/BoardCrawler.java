@@ -82,45 +82,52 @@ public class BoardCrawler extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		//String url = "http://www.farmmate.com/shop/home_y9.php3";
 		String url = request.getParameter("url");
-		Document rawPage = Jsoup.connect(url).get();
+		//Document rawPage = Jsoup.connect(url).get();
 		//String text = rawPage.text();
 		
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
+			Crawler crawler = new Crawler(url);
+			System.out.println(crawler);
+			
 			stmt = conn.createStatement();
 			
 			String sql = null;
-			Elements rows = rawPage.select("form[name=formsub]").select("tr");
-			for(Element row : rows) {
+			List<Article> articles = crawler.getArticles();
+			//System.out.println(articles);
+			//Elements rows = rawPage.select("form[name=formsub]").select("tr");
+			for(Article article : articles) {
+				System.out.println(article);
 				//System.out.println(row.children().eachText().size());
 				//System.out.println(row.text());
 				//System.out.println(row.childNodeSize());
-				String prodno = null, custid = null, regdate = null;
-				String contents = null, postno = null;
-				List<String> textList = row.children().eachText();
-				if (textList.size() > 5) continue;
-				
-				prodno = textList.get(0).substring(textList.get(0).indexOf('[') + 1, textList.get(0).indexOf(']'));
-				custid = textList.get(1);
-				contents = textList.get(3);
-				regdate = "2017-" + textList.get(4);
-				postno = String.join("|", prodno, custid, regdate);
-				//System.out.println("postno:"+postno);
+//				String prodno = null, custid = null, regdate = null;
+//				String contents = null, postno = null;
+//				List<String> textList = row.children().eachText();
+//				if (textList.size() > 5) continue;
+//				
+//				prodno = textList.get(0).substring(textList.get(0).indexOf('[') + 1, textList.get(0).indexOf(']'));
+//				custid = textList.get(1);
+//				contents = textList.get(3);
+//				regdate = "2017-" + textList.get(4);
+//				postno = String.join("|", prodno, custid, regdate);
+//				//System.out.println("postno:"+postno);
 				
 				sql = "insert into t_board (chno, url, postno, wdate, contents) ";
-				sql += "values (1, ?, ?, ?, ?)";
+				sql += "values (?, ?, ?, ?, ?)";
 				PreparedStatement pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, url);
-				pstmt.setString(2, postno);
-				pstmt.setDate(3, Date.valueOf(regdate));
-				pstmt.setString(4, contents);
+				pstmt.setInt(1, article.getChannelNo());
+				pstmt.setString(2, article.getUrl());
+				pstmt.setString(3, article.getId());
+				pstmt.setDate(4, article.getWrittenDate());
+				pstmt.setString(5, article.getContext());
 				int result = pstmt.executeUpdate();
 				System.out.println("<SQL> " + sql + " ==> " + result);
 				pstmt.close();
 			}
 			
-			sql = "select b.chno, b.cnt, p.cnt from " +
+			sql = "select coalesce(b.chno, p.chno) chno, b.cnt, p.cnt from " +
 					"(select chno, count(*) as cnt from t_board group by chno) b " +
 					"full outer join " +
 					"(select chno, count(*) as cnt from t_product group by chno) p " +
