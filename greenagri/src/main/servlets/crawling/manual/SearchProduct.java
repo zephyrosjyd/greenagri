@@ -1,9 +1,7 @@
 package crawling.manual;
 
 import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -40,7 +38,7 @@ public class SearchProduct extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServletContext sc = this.getServletContext();
-		java.sql.Connection conn = (java.sql.Connection)sc.getAttribute("dbconn");
+		Connection conn = (Connection)sc.getAttribute("dbconn");
 		try {
 			System.out.println(conn.isClosed());
 		} catch (SQLException e) {
@@ -74,11 +72,9 @@ public class SearchProduct extends HttpServlet {
 			rs.close();
 		
 			request.setAttribute("searchprod", searchprod);
-			// TODO Auto-generated method stub
-			//response.getWriter().append("Served at: ").append(request.getContextPath());
+			
 			callJspPage(request, response, "/preferprod.jsp");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new ServletException(e);
 		} finally {
@@ -88,7 +84,6 @@ public class SearchProduct extends HttpServlet {
 	}
 	
 	private void callJspPage(HttpServletRequest request, HttpServletResponse response, String url) throws ServletException, IOException {
-		//request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 	
 		RequestDispatcher rd = request.getRequestDispatcher(url);
@@ -99,7 +94,6 @@ public class SearchProduct extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

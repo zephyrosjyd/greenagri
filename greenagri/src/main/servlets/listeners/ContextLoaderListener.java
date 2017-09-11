@@ -23,7 +23,6 @@ public class ContextLoaderListener implements ServletContextListener {
          try {
 			conn.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
@@ -43,9 +42,7 @@ public class ContextLoaderListener implements ServletContextListener {
 			
 			sc.setAttribute("dbconn", conn);
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
-	
 }

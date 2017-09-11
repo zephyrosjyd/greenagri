@@ -58,7 +58,7 @@
 		</tr>
 	</table>
 	</form>
-	<!-- <button type="submit" formaction="" formtarget="_self">집계</button> -->
+	
 	<br><br>
 	<p>
 	<h3>수동 크롤링</h3>
@@ -90,7 +90,7 @@
 			</td>
 		</tr>
 	</table>
-	<!-- <button type="submit" formaction="" formtarget="_self">집계</button> -->
+	
 	<br><br><br><br>
 	<p>
 	<% if (rs != null) { %>

@@ -1,10 +1,7 @@
 package crawling.manual;
 
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -29,13 +26,6 @@ public class ProductRegister extends HttpServlet {
 	}
 
 	/**
-	 * @see Servlet#destroy()
-	 */
-	public void destroy() {
-		// TODO Auto-generated method stub
-	}
-
-	/**
 	 * @see Servlet#getServletConfig()
 	 */
 	public ServletConfig getServletConfig() {
@@ -48,7 +38,7 @@ public class ProductRegister extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServletContext sc = this.getServletContext();
-		java.sql.Connection conn = (java.sql.Connection)sc.getAttribute("dbconn");
+		Connection conn = (Connection)sc.getAttribute("dbconn");
 		try {
 			System.out.println(conn.isClosed());
 		} catch (SQLException e) {
@@ -91,8 +81,6 @@ public class ProductRegister extends HttpServlet {
 			
 			request.setAttribute("rs", rs);
 				
-			// TODO Auto-generated method stub
-			//response.getWriter().append("Served at: ").append(request.getContextPath());
 			callJspPage(request, response, "/index.jsp");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -104,7 +92,6 @@ public class ProductRegister extends HttpServlet {
 	}
 	
 	private void callJspPage(HttpServletRequest request, HttpServletResponse response, String url) throws ServletException, IOException {
-		//request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 	
 		RequestDispatcher rd = request.getRequestDispatcher(url);
@@ -115,7 +102,6 @@ public class ProductRegister extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

@@ -1,10 +1,7 @@
 package crawling.manual;
 
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -41,7 +38,7 @@ public class PriceRegister extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServletContext sc = this.getServletContext();
-		java.sql.Connection conn = (java.sql.Connection)sc.getAttribute("dbconn");
+		Connection conn = (Connection)sc.getAttribute("dbconn");
 		try {
 			System.out.println(conn.isClosed());
 		} catch (SQLException e) {
@@ -61,8 +58,6 @@ public class PriceRegister extends HttpServlet {
 		ResultSet rs = null;
 		
 		try {
-			//stmt = conn.createStatement();
-			
 			String sql = "update t_product set std_price = ? where pid = ?";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, Integer.valueOf(price));
@@ -73,11 +68,8 @@ public class PriceRegister extends HttpServlet {
 			
 			request.setAttribute("updated", "ok");
 			
-			// TODO Auto-generated method stub
-			//response.getWriter().append("Served at: ").append(request.getContextPath());
 			callJspPage(request, response, "/preferprod.jsp");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new ServletException(e);
 		} finally {
@@ -87,7 +79,6 @@ public class PriceRegister extends HttpServlet {
 	}
 	
 	private void callJspPage(HttpServletRequest request, HttpServletResponse response, String url) throws ServletException, IOException {
-		//request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 	
 		RequestDispatcher rd = request.getRequestDispatcher(url);
@@ -98,7 +89,6 @@ public class PriceRegister extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

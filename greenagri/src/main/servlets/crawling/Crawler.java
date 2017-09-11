@@ -1,11 +1,8 @@
 package crawling;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import org.jsoup.*;
 import org.jsoup.nodes.*;
@@ -87,7 +84,6 @@ public class Crawler {
 			
 			this.articles.add(article);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

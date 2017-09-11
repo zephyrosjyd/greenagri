@@ -1,11 +1,7 @@
 package crawling;
 
 import java.io.IOException;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -43,21 +39,6 @@ public class ProductCrawler extends HttpServlet {
 	}
 
 	/**
-	 * @see Servlet#getServletInfo()
-	 */
-	public String getServletInfo() {
-		return "version=1.0;author=zephyros"; 
-	}
-
-	/**
-	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
-	 */
-//	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		System.out.println("ProductCrawler.service() called");
-//		this.doGet(request, response);
-//	}
-
-	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -80,25 +61,19 @@ public class ProductCrawler extends HttpServlet {
 			stmt = conn.createStatement();
 			
 			String sql = null;
-			
-			//String text = rawPage.text();
 			Elements rows = rawPage.select("table table table").nextAll().select("tr");
-//			System.out.println(info);
 			
-			String title = null, price = null, base = null, prodno = null;
+			String title = null, price = null, base = null;//, prodno = null;
 			for(Element row : rows) {
-				//System.out.println(row.text());
-				
 				List<String> textList = row.children().eachText();
 				if (textList.size() != 6) continue;
 				
-				prodno = textList.get(2);
+				//prodno = textList.get(2);
 				title = textList.get(3);
 				base = title;
 				price = textList.get(4).substring(0, textList.get(4).length()-1);
 				price = price.substring(0, price.lastIndexOf(',')).concat( price.substring(price.lastIndexOf(',')+1) );
-				//System.out.println(textList.get(4) + ": " + Integer.valueOf(price));
-			
+				
 				sql = "insert into t_product (chno, url, title, price, base) ";
 				sql += "values (1, ?, ?, ?, ?)";
 				PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -121,9 +96,6 @@ public class ProductCrawler extends HttpServlet {
 			
 			request.setAttribute("rs", rs);
 			
-			//response.getWriter().append("Served at: ").append(request.getContextPath());
-//			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
-//			dispatcher.forward(request, response);
 			callJspPage(request, response, "/index.jsp");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -136,7 +108,6 @@ public class ProductCrawler extends HttpServlet {
 	}
 	
 	private void callJspPage(HttpServletRequest request, HttpServletResponse response, String url) throws ServletException, IOException {
-		//request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 	
 		RequestDispatcher rd = request.getRequestDispatcher(url);
@@ -147,7 +118,6 @@ public class ProductCrawler extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
